@@ -1,4 +1,4 @@
-namespace: &masterval my_project
+namespace: &masterval my-project
 branch_ng: %BRNG%
 branch_nd: %BRND%
 tag_ng: %TAGNG%
