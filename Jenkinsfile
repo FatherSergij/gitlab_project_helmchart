@@ -19,10 +19,8 @@ pipeline {
             steps {
                 sh "scp -o StrictHostKeyChecking=no -r helm/ ubuntu@${IP_K8S}:~/"
                 script {
-                sh("ssh ubuntu@${IP_K8S}; \
-                    cd helm/; \
+                sh("ssh ubuntu@${IP_K8S} \
                     pwd; \
-                    ls; \
                     cd helm/; \
                     pwd; \
                     ls; \
