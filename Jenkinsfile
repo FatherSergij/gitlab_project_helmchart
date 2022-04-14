@@ -8,9 +8,9 @@ pipeline {
         TAGND="${params.ImageTag_nd}" 
     }    
     
-    libraries {
-         lib('lib-for-project')
-    }    
+   // libraries {
+   //      lib('lib-for-project')
+  //  }    
     
     stages {       
 
@@ -18,7 +18,7 @@ pipeline {
 
             steps {
                 sh "pwd"
-                sh "ls"
+                sh "ls helm/"
                 sh "scp -o StrictHostKeyChecking=no -r helm/ ubuntu@${IP_K8S}:~/"
                 script {
                 sh("ssh ubuntu@${IP_K8S} \
