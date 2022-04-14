@@ -1,5 +1,5 @@
 namespace: &masterval my_project
-branch_ng: %BRNG%
+branch_ng: BRNG
 branch_nd: %BRND%
 tag_ng: %TAGNG%
 tag_nd: %TAGND%
