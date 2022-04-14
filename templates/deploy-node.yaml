@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-{{.Values.service.name2}}
+  namespace: {{.Values.namespace}}  
+spec:
+  selector:
+    matchLabels:
+      app: {{.Values.labels.service2}}
+  template:  
+    metadata:
+      labels:
+        app: {{.Values.labels.service2}}
+    spec:
+      containers:
+      - name: {{.Values.service.name2}}
+        image: {{ .Values.image.repository }}/bigproject_{{.Values.service.name2}}_{{.Values.namespace}}:latest
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources:
+          {{ toYaml .Values.resources | nindent 10 }}
+      #imagePullSecrets:
+      #- name: regcred         

@@ -1,0 +1,62 @@
+namespace: &masterval master
+namerepo: bigproject
+region: eu-north-1
+
+labels:
+  service1: nginx
+  service2: node
+
+image:
+  repository: 728490037630.dkr.ecr.eu-north-1.amazonaws.com
+  pullPolicy: Always
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 200Mi
+  limits:
+    cpu: 200m
+    memory: 300Mi  
+
+service:
+  name1: nginx
+  name2: node
+  type: ClusterIP
+  port1: 80
+  port2: 8080
+  targetPort: 80
+
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: nginx 
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: "issuer-letsencrypt"
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+  tls:
+  - hosts:
+      - "nginx.fatherfedor.fun"
+      - "node.fatherfedor.fun"
+    secretName: ssl-letsencrypt 
+  hosts: |
+    - host: "nginx.fatherfedor.fun"
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: sv-{{ .Values.service.name1 }}
+              port:
+                number: 80 
+    - host: "node.fatherfedor.fun"
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: sv-{{ .Values.service.name2 }}
+              port:
+                number: 80               
