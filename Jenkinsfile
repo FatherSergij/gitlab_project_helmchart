@@ -17,15 +17,13 @@ pipeline {
         stage('Deploy on k8s with Helm Chart') {
 
             steps {
-                sh "pwd"
-                sh "ls helm/"
                 sh "scp -o StrictHostKeyChecking=no -r helm/ ubuntu@${IP_K8S}:~/"
                 script {
                 sh('ssh ubuntu@${IP_K8S} """cd helm; \
                     ls; \
                     sed -i.bak \'s/%BRNG%/${BRANCHNG}/; s/%TAGNG%/${TAGNG}/; \
-                        s/%BRND%/${BRANCHND}/; s/%TAGND%/${TAGND}/\' values.yaml;"""')
-                  //  helm install test .;")
+                        s/%BRND%/${BRANCHND}/; s/%TAGND%/${TAGND}/\' values.yaml; \
+                    helm install test .;"""')
                 }                                                     
             }
         } 
