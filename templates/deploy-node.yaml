@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: {{.Values.service.name2}}
-        image: {{ .Values.image.repository }}/bigproject_{{.Values.service.name2}}_{{.Values.namespace}}:latest
+        image: {{ .Values.image.repository }}/bigproject_{{.Values.service.name2}}\
+          _{{.Values.branch_nd}}:{{.Values.tag_nd}}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources:
           {{ toYaml .Values.resources | nindent 10 }}

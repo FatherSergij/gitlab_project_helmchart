@@ -1,4 +1,8 @@
-namespace: &masterval master
+namespace: &masterval my_project
+branch_ng: %BRNG%
+branch_nd: %BRND%
+tag_ng: %TAGNG%
+tag_nd: %TAGND%
 namerepo: bigproject
 region: eu-north-1
 
