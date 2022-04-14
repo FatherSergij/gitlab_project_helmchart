@@ -17,6 +17,8 @@ pipeline {
         stage('Deploy on k8s with Helm Chart') {
 
             steps {
+                sh "pwd"
+                sh "ls"
                 sh "scp -o StrictHostKeyChecking=no -r helm/ ubuntu@${IP_K8S}:~/"
                 script {
                 sh("ssh ubuntu@${IP_K8S} \
