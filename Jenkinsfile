@@ -21,8 +21,8 @@ pipeline {
                 script {
                 sh("ssh ubuntu@${IP_K8S} \
                     'cd helm; \
-                    sed -i .bak s/%BRNG%/${BRANCHNG}/;s/%TAGNG%/${TAGNG}/;\
-                        s/%BRND%/${BRANCHND}/;s/%TAGND%/${TAGND}/ values.yaml;
+                    sed -i .bak s/%BRNG%/${BRANCHNG}/; s/%TAGNG%/${TAGNG}/; \
+                        s/%BRND%/${BRANCHND}/; s/%TAGND%/${TAGND}/ values.yaml;
                     helm install test .;'")
                 }                                                     
             }
