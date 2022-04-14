@@ -23,7 +23,7 @@ pipeline {
                     ls; \
                     sed -i.bak \'s/%BRNG%/${BRANCHNG}/; s/%TAGNG%/${TAGNG}/; \
                         s/%BRND%/${BRANCHND}/; s/%TAGND%/${TAGND}/\' values.yaml; \
-                    helm install test .;"""')
+                    helm upgrade --install test .;"""')
                 }                                                     
             }
         } 
