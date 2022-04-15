@@ -34,7 +34,7 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: nginx 
     kubernetes.io/tls-acme: "true"
-    cert-manager.io/cluster-issuer: "issuer-letsencrypt"
+    cert-manager.io/issuer: "issuer-letsencrypt"
     acme.cert-manager.io/http01-edit-in-place: "true"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 100m
