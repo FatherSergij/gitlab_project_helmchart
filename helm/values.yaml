@@ -12,7 +12,7 @@ labels:
 
 image:
   repository: 728490037630.dkr.ecr.eu-north-1.amazonaws.com
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 resources:
   requests:
