@@ -4,6 +4,7 @@ metadata:
   annotation:
   generation: 1
   name: issuer-letsencrypt
+  namespace: {{.Values.namespace}}
 spec:
   acme:
     email: FatherFedor13@gmail.com
