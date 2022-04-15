@@ -7,7 +7,6 @@ pipeline {
         TAGND="${params.ImageTagNode}" 
         BRANCH_DEV="${params.BranchRun_dev}"
         TAG_DEV="${params.ImageTag_dev}" 
-        SERVICE_DEV="${params.ServiceRun_dev}"        
     }    
     
     libraries {
