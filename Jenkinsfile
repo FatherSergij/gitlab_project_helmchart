@@ -1,30 +1,40 @@
 pipeline {
     agent any
     environment {
-        IP_K8S="16.170.42.2"
-        BRANCHNG="${params.BranchRun_ng}"
-        TAGNG="${params.ImageTag_ng}" 
-        BRANCHND="${params.BranchRun_nd}"
-        TAGND="${params.ImageTag_nd}" 
+        BRANCHNG="${params.BranchRunNginx}"
+        TAGNG="${params.ImageTagNginx}" 
+        BRANCHND="${params.BranchRunNode}"
+        TAGND="${params.ImageTagNode}" 
+        BRANCH_DEV="${params.BranchRun_dev}"
+        TAG_DEV="${params.ImageTag_dev}" 
+        SERVICE_DEV="${params.ServiceRun_dev}"        
     }    
     
-   // libraries {
-   //      lib('lib-for-project')
-  //  }    
+    libraries {
+         lib('lib-for-project')
+    }    
     
     stages {       
 
-        stage('Deploy on k8s with Helm Chart') {
+        //stage('Logging into AWS ECR') {
+        //    steps {
+        //        script {
+        //            LogToEcr()
+        //        }
+        //    }
+        //}
+
+
+        stage('Deploy on k8s') {
 
             steps {
-                sh "scp -o StrictHostKeyChecking=no -r helm/ ubuntu@${IP_K8S}:~/"
                 script {
-                sh('ssh ubuntu@${IP_K8S} """cd helm; \
-                    ls; \
-                    sed -i.bak \'s/%BRNG%/${BRANCHNG}/; s/%TAGNG%/${TAGNG}/; \
-                        s/%BRND%/${BRANCHND}/; s/%TAGND%/${TAGND}/\' values.yaml; \
-                    helm upgrade --install test .;"""')
-                }                                                     
+                    if ("${BRANCH_DEV}" == 'develop') {
+                        DeployHelm ("${BRANCH_DEV}", "${TAG_DEV}", "${BRANCH_DEV}", "${TAG_DEV}")
+                    } else {
+                        DeployHelm ("${BRANCHNG}", "${TAGNG}", "${BRANCHND}", "${TAGND}")
+                    }                                             
+                }                                                       
             }
         } 
     }
