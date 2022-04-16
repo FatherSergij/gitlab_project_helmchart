@@ -15,14 +15,6 @@ pipeline {
     
     stages {       
 
-        //stage('Logging into AWS ECR') {
-        //    steps {
-        //        script {
-        //            LogToEcr()
-        //        }
-        //    }
-        //}
-
 
         stage('Deploy on k8s') {
 
