@@ -15,7 +15,6 @@ pipeline {
     
     stages {       
 
-
         stage('Deploy on k8s') {
 
             steps {
