@@ -1,0 +1,23 @@
+include:
+  - project: 'FatherFedor/project_lib_deploy'
+    file: 
+      - '/lib/DeployHelm.yml'
+variables:
+  IP_K8S: "16.170.42.2"
+
+stages:
+  - deploy
+
+Deploy_helm_k8s:
+  stage: deploy
+  except:
+    refs:
+      - pushes
+  tags:
+    - shell
+  script:
+    - !reference [.deployhelm, script]  
+    #- scp -o StrictHostKeyChecking=no -r helm/ ubuntu@${IP_K8S}:~/
+    #- ssh ubuntu@${IP_K8S} "cd helm; 
+    #    sed -i.bak 's/%BRNG%/${BRANCHNG}/; s/%TAGNG%/${TAGNG}/; s/%BRND%/${BRANCHND}/; s/%TAGND%/${TAGND}/' values.yaml; 
+    #    helm upgrade --install -n my-project --kubeconfig kubernetes-deploy-helm-kube.conf test .;"
