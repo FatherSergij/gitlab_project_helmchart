@@ -1,6 +1,5 @@
 namespace: &masterval my-project
-branch_ng: %BRNG%
-branch_nd: %BRND%
+branch: %BR%
 tag_ng: %TAGNG%
 tag_nd: %TAGND%
 namerepo: bigproject
@@ -40,11 +39,11 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-body-size: 100m
   tls:
   - hosts:
-      - "nginx.fatherfedor.fun"
-      - "node.fatherfedor.fun"
+      - %BR%.nginx.fatherfedor.fun
+      - %BR%.node.fatherfedor.fun
     secretName: ssl-letsencrypt 
   hosts: |
-    - host: "nginx.fatherfedor.fun"
+    - host: %BR%.nginx.fatherfedor.fun
       http:
         paths:
         - path: /
@@ -54,7 +53,7 @@ ingress:
               name: sv-{{ .Values.service.name1 }}
               port:
                 number: 80 
-    - host: "node.fatherfedor.fun"
+    - host: %BR%.node.fatherfedor.fun
       http:
         paths:
         - path: /

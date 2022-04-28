@@ -1,23 +1,73 @@
 include:
   - project: 'FatherFedor/project_lib_deploy'
     file: 
+      - '/lib/Variables.yml'
+      - '/lib/Logging.yml'
       - '/lib/DeployHelm.yml'
+      - '/lib/GetTag.yml'
 variables:
   IP_K8S: "16.170.42.2"
 
 stages:
-  - deploy
+  - logging
+  - deploy_develop
+  - deploy_release
+  - deploy_master
 
-Deploy_helm_k8s:
-  stage: deploy
+logging_to_aws_ecr:
+  stage: logging
   except:
-    refs:
-      - pushes
+    changes:
+      - "*"  
+  tags:
+    - shell
+  extends:
+    - .logging
+
+deploy_develop:
+  variables:
+    TAGNG: "latest"
+    TAGND: "latest"
+  stage: deploy_develop
+  rules:
+    - if: $BRANCH == "develop"  
+  tags:
+    - shell
+  extends:
+    - .deployhelm  
+
+deploy_release:
+  variables:
+    BRANCH: "release"
+    TAGNG: ""
+    TAGND: ""
+  stage: deploy_release
+  needs: 
+    - job: logging_to_aws_ecr
+      optional: true
+  rules:
+    - when: manual
   tags:
     - shell
   script:
-    - !reference [.deployhelm, script]  
-    #- scp -o StrictHostKeyChecking=no -r helm/ ubuntu@${IP_K8S}:~/
-    #- ssh ubuntu@${IP_K8S} "cd helm; 
-    #    sed -i.bak 's/%BRNG%/${BRANCHNG}/; s/%TAGNG%/${TAGNG}/; s/%BRND%/${BRANCHND}/; s/%TAGND%/${TAGND}/' values.yaml; 
-    #    helm upgrade --install -n my-project --kubeconfig kubernetes-deploy-helm-kube.conf test .;"
+    - BRANCH="release"  
+    - !reference [.gettag , script] 
+    - !reference [.deployhelm , script] 
+
+deploy_master:
+  variables:
+    BRANCH: "master"
+    TAGNG: ""
+    TAGND: ""
+  stage: deploy_master
+  needs: 
+    - job: logging_to_aws_ecr
+      optional: true
+  rules:
+    - when: manual
+  tags:
+    - shell
+  script:
+    - BRANCH="master"
+    - !reference [.gettag , script] 
+    - !reference [.deployhelm , script] 

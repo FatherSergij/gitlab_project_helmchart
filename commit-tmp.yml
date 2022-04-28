@@ -1,0 +1,12 @@
+release:
+  service:
+    nginx:
+      version: %NGSTAGE%
+    node:
+      version: %NDSTAGE%        
+master:
+  service:
+    nginx:
+      version: %NGPROD%
+    node:
+      version: %NDPROD%      

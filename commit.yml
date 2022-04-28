@@ -1,0 +1,12 @@
+release:
+  service:
+    nginx:
+      version: a87ef8961801abb6f0b57fc400c9d37d965f4f1f
+    node:
+      version: 380069cf83d0c5279e32e010a7110aec64a1b80d        
+master:
+  service:
+    nginx:
+      version: 5cab45189ef733dec39d618b5f7d5b3dd786519a
+    node:
+      version: c013f0350a5937f1b2def945cf641f4840a53a59      
