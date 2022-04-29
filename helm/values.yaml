@@ -39,11 +39,11 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-body-size: 100m
   tls:
   - hosts:
-      - %BR%.nginx.fatherfedor.fun
-      - %BR%.node.fatherfedor.fun
+      - nginx.fatherfedor.fun
+      - node.fatherfedor.fun
     secretName: ssl-letsencrypt 
   hosts: |
-    - host: %BR%.nginx.fatherfedor.fun
+    - host: nginx.fatherfedor.fun
       http:
         paths:
         - path: /
@@ -53,7 +53,7 @@ ingress:
               name: sv-{{ .Values.service.name1 }}
               port:
                 number: 80 
-    - host: %BR%.node.fatherfedor.fun
+    - host: node.fatherfedor.fun
       http:
         paths:
         - path: /
